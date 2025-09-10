@@ -43,7 +43,7 @@ export const styleImage = async (imagePart: Part, prompt: string): Promise<strin
     }
 
     // If no image, provide a more detailed error based on the response
-    if (candidate.finishReason === FinishReason.SAFETY) {
+    if (candidate.finishReason === FinishReason.SAFETY || candidate.finishReason === 'PROHIBITED_CONTENT') {
         throw new Error("Your request was blocked by safety filters. This can happen when using photos of people. Please try a different photo or a more general style.");
     }
     
