@@ -48,18 +48,17 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({ onImageUpload, upl
         onDragOver={handleDragOver}
         onDragEnter={handleDragEnter}
         onDragLeave={handleDragLeave}
-        className={`flex justify-center items-center w-full h-64 border-2 border-dashed rounded-lg cursor-pointer transition-colors duration-300
-          ${isDragging ? 'border-blue-500 bg-blue-50' : 'border-slate-300 hover:border-blue-400 bg-slate-50'}`}
+        className={`flex justify-center items-center w-full h-64 border-2 border-dashed rounded-2xl cursor-pointer transition-all duration-300
+          ${isDragging ? 'border-blue-400 bg-blue-500/10' : 'border-slate-600 hover:border-blue-400 bg-slate-700/50 hover:bg-slate-700/70'}`}
       >
         {uploadedImageUrl ? (
           <img src={uploadedImageUrl} alt="Uploaded preview" className="h-full w-full object-contain rounded-lg p-2" />
         ) : (
-          <div className="text-center text-slate-500">
-            <svg className="w-12 h-12 mx-auto text-slate-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
-              <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
-            </svg>
-            <p className="mt-2 font-semibold">Upload a clear, well-lit photo of your face</p>
-            <p className="text-xs">PNG, JPG, WEBP (MAX. 5MB)</p>
+          <div className="text-center">
+            <div className="text-5xl mb-4">📸</div>
+            <p className="text-lg font-bold text-white mb-2">Drop your photo here</p>
+            <p className="text-sm text-slate-400 mb-1">or click to browse</p>
+            <p className="text-xs text-slate-500">PNG, JPG, WEBP (MAX. 5MB)</p>
           </div>
         )}
       </label>

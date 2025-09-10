@@ -4,4 +4,5 @@ export interface StyleOption {
   name: string;
   description: string;
   prompt: string;
+  hashtags?: string[];
 }
