@@ -1,5 +1,5 @@
 
-import { GoogleGenAI, Modality } from "@google/genai";
+import { GoogleGenAI, Modality, FinishReason } from "@google/genai";
 import type { Part } from "@google/genai";
 
 const API_KEY = process.env.API_KEY;
@@ -26,23 +26,38 @@ export const styleImage = async (imagePart: Part, prompt: string): Promise<strin
       },
     });
 
+    const candidate = response.candidates?.[0];
+
+    if (!candidate) {
+      throw new Error("The model did not return a response. Please try again.");
+    }
+    
     // Find the image part in the response
-    const imageParts = response.candidates?.[0]?.content?.parts.filter(
+    const generatedImagePart = candidate.content?.parts?.find(
       (part) => part.inlineData?.data
     );
 
-    if (imageParts && imageParts.length > 0 && imageParts[0].inlineData) {
-      const { data, mimeType } = imageParts[0].inlineData;
+    if (generatedImagePart?.inlineData) {
+      const { data, mimeType } = generatedImagePart.inlineData;
       return `data:${mimeType};base64,${data}`;
     }
 
-    // Check for a text-only response which might contain an error or refusal
-    const textResponse = response.text?.trim();
-    if (textResponse) {
-      throw new Error(`The model returned a text response instead of an image: "${textResponse}"`);
+    // If no image, provide a more detailed error based on the response
+    if (candidate.finishReason === FinishReason.SAFETY) {
+        throw new Error("Your request was blocked by safety filters. This can happen when using photos of people. Please try a different photo or a more general style.");
+    }
+    
+    if (candidate.finishReason === FinishReason.RECITATION) {
+        throw new Error("Your request was blocked as it may violate content policies. Please try a different prompt.");
     }
 
-    throw new Error("No image data found in the API response.");
+    const textResponse = response.text?.trim();
+    if (textResponse) {
+      throw new Error(`The model returned a message instead of an image: "${textResponse}"`);
+    }
+    
+    // Generic fallback including the finish reason for debugging
+    throw new Error(`Image generation failed. (Reason: ${candidate.finishReason || 'Unknown'})`);
 
   } catch (error) {
     console.error("Error calling Gemini API:", error);
