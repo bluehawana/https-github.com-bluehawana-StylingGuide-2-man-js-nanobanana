@@ -7,6 +7,7 @@ import { Loader } from './components/Loader';
 import { Footer } from './components/Footer';
 import { StyleShowcase } from './components/StyleShowcase';
 import { TransformationShowcase } from './components/TransformationShowcase';
+import { ProductShowcase } from './components/ProductShowcase';
 import { styleImage } from './services/geminiService';
 import { StyleOption } from './types';
 import { styleOptions } from './constants';
@@ -94,11 +95,11 @@ const App: React.FC = () => {
       
       {/* Hero Section */}
       <section className="relative overflow-hidden py-16 px-4">
-        {/* Background transformation images - 3 photos with heads visible */}
-        <div className="absolute inset-0 flex opacity-50">
-          <div className="flex-1 bg-cover bg-top" style={{ backgroundImage: `url(${modelImg})` }}></div>
-          <div className="flex-1 bg-cover bg-top" style={{ backgroundImage: `url(${casualImg})` }}></div>
-          <div className="flex-1 bg-cover bg-top" style={{ backgroundImage: `url(${businessImg})` }}></div>
+        {/* Background transformation images - showing more full body */}
+        <div className="absolute inset-0 flex opacity-40">
+          <div className="flex-1 bg-cover" style={{ backgroundImage: `url(${modelImg})`, backgroundPosition: 'center 80%' }}></div>
+          <div className="flex-1 bg-cover" style={{ backgroundImage: `url(${casualImg})`, backgroundPosition: 'center 70%' }}></div>
+          <div className="flex-1 bg-cover" style={{ backgroundImage: `url(${businessImg})`, backgroundPosition: 'center 75%' }}></div>
         </div>
         
         <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 to-cyan-600/10 animate-pulse"></div>
@@ -203,6 +204,10 @@ const App: React.FC = () => {
 
         </div>
       </main>
+      
+      {/* Product Showcase */}
+      <ProductShowcase />
+      
       <Footer />
     </div>
   );

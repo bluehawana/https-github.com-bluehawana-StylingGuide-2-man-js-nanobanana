@@ -1,0 +1,6 @@
+# git-filter-repo replacement patterns
+# Format: ORIGINAL==>REPLACEMENT
+
+# Redact the two leaked keys seen in prior commits
+AIzaSyDD8tGTJfEhKIIxGiT5RejUD5KieliouJ4==>REDACTED_GEMINI_KEY
+AIzaSyDZlmi3ZPv8IhtELl7IzEm4R4Vr2unlPIs==>REDACTED_GEMINI_KEY
